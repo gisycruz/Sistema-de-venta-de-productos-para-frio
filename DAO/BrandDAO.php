@@ -40,8 +40,7 @@ class BrandDAO implements Ibrand{
             $brand = new Brand();
             $brand->setId_brand($p["id_brand"]);
             $brand->setName($p['name']);
-            $brand->setCategory(CategoryDAO::MapearCategory($p['idcategory']));
-            
+           
 
             return $brand;
         }, $value);
@@ -89,7 +88,7 @@ class BrandDAO implements Ibrand{
             }else{
 
                 $arrayResult[0] = $result;
-                $this->listCategory = $arrayResult;
+                $this->listBrand = $arrayResult;
 
             }
 
@@ -103,11 +102,10 @@ class BrandDAO implements Ibrand{
 
     public function addBrand(Brand $brand){
 
-      $query = " INSERT INTO " . $this->nameTable . " (name , idcategory )  VALUE (:name , :idcategory) ";
+      $query = " INSERT INTO " . $this->nameTable . " (name)  VALUE (:name ) ";
 
       $parameters['name'] = $brand->getName();
-      $parameters['idcategory'] = $brand->getCategory()->getId_category();
-
+     
       try {
           
        $result =  $this->connection->ExecuteNonQuery($query,$parameters);
@@ -120,15 +118,16 @@ class BrandDAO implements Ibrand{
       return $result;
 
     }
+    
     function deleteBrand($id_brand){
 
-        $query = " DELETE FROM " . $this->nameTable . " where id_brand = (:id_brand) ";
+        $query = " CALL deleteBrand(?) ";
 
         $parameters['id_brand'] = $id_brand;
 
         try {
             
-           $result = $this->connection->ExecuteNonQuery($query , $parameters);
+           $result = $this->connection->ExecuteNonQuery($query , $parameters,QueryType::StoredProcedure);
 
         } catch (Exception $ex) {
             throw $ex;
@@ -137,6 +136,22 @@ class BrandDAO implements Ibrand{
         return $result;
     }
 
+    public function ModifyBrand($id_brand,$name) {
+
+        $query = " UPDATE " . $this->nameTable . " SET name = (:name)  WHERE  id_brand = (:id_brand) ";
+      
+        $parameters["name"] = $name;
+        $parameters["id_brand"] =$id_brand;
+        try {
+          
+        $result = $this->connection->ExecuteNonQuery($query, $parameters);
+
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+        return $result;
+
+    }
     public  function GetBrandForId($id_brand){
         
         $query = " SELECT * FROM " . $this->nameTable .  " where id_brand = (:id_brand) " ;
@@ -162,50 +177,7 @@ class BrandDAO implements Ibrand{
 
     }
 
-    public function getListBrandFromCategoryBD($id_category){
-
-        $query = " SELECT * FROM " .$this->nameTable . " where  idcategory = (:idcategory)";
-  
-        $parameters['idcategory'] = $id_category;
-  
-        try {
-            
-         $result =  $this->connection->Execute($query,$parameters);
-  
-  
-        } catch (Exception $ex) {
-            throw $ex;
-        }
-  
-        return $result;
-  
-      } 
-      public function getListBrandFromCategory($id_category){
-
-        $this->listBrand = [];
-
-          $arrayBrand = $this->getListBrandFromCategoryBD($id_category);
-
-          if(!empty($arrayBrand)){
-
-            $result = $this->Mapear($arrayBrand);
-
-            if(is_array($result)){
-
-                $this->listBrand = $result;
-
-            }else{
-
-                $arrayResult[0] = $result;
-                $this->listCategory = $arrayResult;
-
-            }
-
-          }
-
-          return $this->listBrand;
-
-    }
+    
 
 }
 

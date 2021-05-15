@@ -9,5 +9,5 @@ interface Ibrand{
     function getAllbrand();
     function addBrand(Brand $brand);
     function deleteBrand($id_brand);
-    function getListBrandFromCategory($id_category);
+    function ModifyBrand($id_brand,$name);
 }

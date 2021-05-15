@@ -115,19 +115,36 @@ class GasTypeDAO implements IgasType{
     
     public function deleteGasType($id_gasType){
 
-        $query = " DELETE FROM " . $this->nameTable . " where id_gasType = (:id_gasType) ";
+        $query = " CALL  deleteGasType(?) ";
 
         $parameters['id_gasType'] = $id_gasType;
 
         try {
 
-           $result = $this->connection->ExecuteNonQuery($query,$parameters);
+           $result = $this->connection->ExecuteNonQuery($query,$parameters,QueryType::StoredProcedure);
 
 
         } catch (Exception $ex) {
             throw $ex;
         }
 
+        return $result;
+
+    }
+
+    public function ModifyGasType($id_gasType,$name) {
+
+        $query = " UPDATE " . $this->nameTable . " SET name = (:name)  WHERE  id_gasType = (:id_gasType) ";
+      
+        $parameters["name"] = $name;
+        $parameters["id_gasType"] =$id_gasType;
+        try {
+          
+        $result = $this->connection->ExecuteNonQuery($query, $parameters);
+
+        } catch (Exception $ex) {
+            throw $ex;
+        }
         return $result;
 
     }

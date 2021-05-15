@@ -69,7 +69,7 @@
 <div class="full-width navBar">
 		<div class="full-width navBar-options">
 			<i class="zmdi zmdi-more-vert btn-menu" id="btn-menu"></i>	
-			<div class="mdl-tooltip" for="btn-menu">Menu</div>
+			<div class="mdl-tooltip" for="btn-menu">Menu </div>
 			<nav class="navBar-options-list">
 				<ul class="list-unstyle">
 					<li class="btn-Notification" id="notifications">
@@ -110,14 +110,14 @@
 				</figcaption>
 			</figure>
 			<div class="full-width tittles navLateral-body-tittle-menu">
-				<i class="zmdi zmdi-desktop-mac"></i><span class="hide-on-tablet">&nbsp; MENU</span>
+				<i class="zmdi zmdi-menu"></i><span class="hide-on-tablet">&nbsp; MENU</span>
 			</div>
 			<nav class="full-width">
 				<ul class="full-width list-unstyle menu-principal">
 					<li class="full-width">
 						<a href="<?php echo FRONT_ROOT."User/HomeBelcome"?>" class="full-width">
 							<div class="navLateral-body-cl">
-								<i class="zmdi zmdi-view-dashboard"></i>
+								<i class="zmdi zmdi-home"></i>
 							</div>
 							<div class="navLateral-body-cr hide-on-tablet">
 								HOME
@@ -149,7 +149,7 @@
 							<li class="full-width">
 								<a href="<?php echo FRONT_ROOT."Brand/showAddBrand";?>" class="full-width">
 									<div class="navLateral-body-cl">
-										<i class="zmdi zmdi-balance"></i>
+										<i class="zmdi zmdi-tag-more"></i>
 									</div>
 									<div class="navLateral-body-cr hide-on-tablet">
 										MARCAS
@@ -167,9 +167,9 @@
 								</a>
 							</li>
 							<li class="full-width">
-								<a href="payments.html" class="full-width">
+								<a href="<?php echo FRONT_ROOT."GasType/showAddGasType";?>" class="full-width">
 									<div class="navLateral-body-cl">
-										<i class="zmdi zmdi-card"></i>
+										<i class="zmdi zmdi-fire"></i>
 									</div>
 									<div class="navLateral-body-cr hide-on-tablet">
 									   TIPO DE GAS
@@ -177,22 +177,22 @@
 								</a>
 							</li>
 							<li class="full-width">
-								<a href="payments.html" class="full-width">
+								<a href="<?php echo FRONT_ROOT."Aplication/showAddAplication";?>" class="full-width">
 									<div class="navLateral-body-cl">
-										<i class="zmdi zmdi-card"></i>
+										<i class="zmdi zmdi-toys"></i>
 									</div>
 									<div class="navLateral-body-cr hide-on-tablet">
-									   APLICACION
+									  TIPO DE APLICACION
 									</div>
 								</a>
 							</li>
 							<li class="full-width">
-								<a href="payments.html" class="full-width">
+								<a href="<?php echo FRONT_ROOT."Power/showAddPower";?>" class="full-width">
 									<div class="navLateral-body-cl">
-										<i class="zmdi zmdi-card"></i>
+										<i class="zmdi zmdi-battery"></i>
 									</div>
 									<div class="navLateral-body-cr hide-on-tablet">
-									   POTENCIA
+									  TIPO DE POTENCIA
 									</div>
 								</a>
 							</li>			

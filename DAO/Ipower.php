@@ -8,6 +8,7 @@ interface Ipower{
 
     function addPower(Power $power);
     function GetAllPower();
+    function ModifyPower($id_Power,$description);
     function deletePower($id_power);
 }
 

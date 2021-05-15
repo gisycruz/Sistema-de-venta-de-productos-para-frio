@@ -114,13 +114,13 @@ class AplicationDAO implements Iaplication{
 
     public function deleteAplication($id_aplication){
 
-        $query = " DELETE * FROM " . $this->nameTable . " where id_aplication = (:id_aplication)";
+        $query = " CALL  deleteAplication(?)";
 
         $parameters['id_aplication'] = $id_aplication;
 
         try {
              
-            $result = $this->connection->ExecuteNonQuery($query,$parameters);
+            $result = $this->connection->ExecuteNonQuery($query,$parameters,QueryType::StoredProcedure);
 
 
         } catch (Exception $ex) {
@@ -129,6 +129,23 @@ class AplicationDAO implements Iaplication{
         }
 
         return $result;
+    }
+
+    public function ModifyAplication($id_Aplication,$name) {
+
+        $query = " UPDATE " . $this->nameTable . " SET name = (:name)  WHERE  id_Aplication = (:id_Aplication) ";
+      
+        $parameters["name"] = $name;
+        $parameters["id_Aplication"] =$id_Aplication;
+        try {
+          
+        $result = $this->connection->ExecuteNonQuery($query, $parameters);
+
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+        return $result;
+
     }
 
     public  function GetAplicationForId($id_aplication){

@@ -110,13 +110,13 @@ class PowerDAO implements Ipower{
 
     function deletePower($id_power){
 
-        $query = " DELETE FROM " .$this->nameTable ." where id_power = (:id_power) ";
+        $query = " CALL deletePower(?)";
 
         $parameters['id_power'] = $id_power;
 
         try {
             
-            $result = $this->connection->ExecuteNonQuery($query, $parameters);
+            $result = $this->connection->ExecuteNonQuery($query, $parameters,QueryType::StoredProcedure);
 
         } catch (Exception $ex) {
             throw $ex;
@@ -125,6 +125,22 @@ class PowerDAO implements Ipower{
         return $result;
     }
 
+    public function ModifyPower($id_Power,$description) {
+
+        $query = " UPDATE " . $this->nameTable . " SET description = (:description)  WHERE  id_Power = (:id_Power) ";
+      
+        $parameters["description"] = $description;
+        $parameters["id_Power"] =$id_Power;
+        try {
+          
+        $result = $this->connection->ExecuteNonQuery($query, $parameters);
+
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+        return $result;
+
+    }
 
     public  function GetPowerForId($id_power){
         

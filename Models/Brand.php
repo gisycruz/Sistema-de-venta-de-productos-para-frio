@@ -6,7 +6,7 @@ class Brand{
 
     private $id_brand;
     private $name;
-    private $category;
+   
     
 
     /**
@@ -49,25 +49,7 @@ class Brand{
         return $this;
     }
 
-    /**
-     * Get the value of category
-     */ 
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
-     * Set the value of category
-     *
-     * @return  self
-     */ 
-    public function setCategory($category)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
+    
 }
 
 ?>

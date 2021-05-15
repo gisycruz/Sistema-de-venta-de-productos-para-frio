@@ -95,3 +95,55 @@ delete from category where id_category = idcategorys;
 end if;
 END $$
 DELIMITER ;
+
+DELIMITER $$
+create procedure deleteBrand(idbrands int)
+BEGIN
+declare idproduct int default 0;
+select id_product into idproduct from product where idbrand = idbrands;
+if(idproduct <> 0) then
+SIGNAL sqlstate '11111' SET MESSAGE_TEXT = 'Result consisted of more than one row', MYSQL_ERRNO = 9999;
+else 
+delete from brand where id_brand = idbrands;
+end if;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+create procedure deleteGasType(idgasTypes int)
+BEGIN
+declare iddp int default 0;
+select id_dp into iddp from descriptionProduct where idgastype = idgasTypes;
+if(iddp <> 0) then
+SIGNAL sqlstate '11111' SET MESSAGE_TEXT = 'Result consisted of more than one row', MYSQL_ERRNO = 9999;
+else 
+delete from gasType where id_gasType = idgasTypes;
+end if;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+create procedure deleteAplication(idAplications int)
+BEGIN
+declare iddp int default 0;
+select id_dp into iddp from descriptionProduct where idAplication = idAplications;
+if(iddp <> 0) then
+SIGNAL sqlstate '11111' SET MESSAGE_TEXT = 'Result consisted of more than one row', MYSQL_ERRNO = 9999;
+else 
+delete from Aplication where id_Aplication = idAplications;
+end if;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+create procedure deletePower(idPowers int)
+BEGIN
+declare iddp int default 0;
+select id_dp into iddp from descriptionProduct where idPower = idPowers;
+if(iddp <> 0) then
+SIGNAL sqlstate '11111' SET MESSAGE_TEXT = 'Result consisted of more than one row', MYSQL_ERRNO = 9999;
+else 
+delete from Power where id_Power = idPowers;
+end if;
+END $$
+DELIMITER ;

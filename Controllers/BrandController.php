@@ -3,7 +3,6 @@
 namespace Controllers;
 
 use DAO\BrandDAO as BrandDAO;
-use DAO\CategoryDAO as CategoryDAO;
 use Models\Brand as Brand;
 use Controllers\Functions;
 use PDOException;
@@ -11,63 +10,117 @@ use PDOException;
 class BrandController{
 
     private $brandDao;
-    private $categoryDao;
 
     public function __construct(){
 
         $this->brandDao = BrandDAO::GetInstance();
-        $this->categoryDao = CategoryDAO::GetInstance();
     }
 
-    public function showAddBrand($message = ""){
+    public function showAddBrand($id_brand = null,$message = ""){
 
         require_once(VIEWS_PATH."validate-session.php");
 
-        $listCategory =  $this->categoryDao->getAllcategory();
-
-        require_once(VIEWS_PATH."add-brand.php");
-    }
-
-    public function showListBrand($id_category , $message = ""){
-           
-        require_once(VIEWS_PATH."validate-session.php");
-
-        $category = CategoryDAO::MapearCategory($id_category);
-
-        $listBrand = $this->brandDao->getListBrandFromCategory($id_category);
-
+        $listBrand =  $this->brandDao->getAllbrand();
         
-        require_once(VIEWS_PATH."add-brand.php");
+        if($id_brand != null)
+        $brand = BrandDAO::MapearBrand($id_brand);
 
+        require_once(VIEWS_PATH."add-Brand.php");
     }
 
-    public function addBrand($id_category,$name){
+public function ShowModify($id_brand){
 
-           $brand = new Brand();
+    require_once(VIEWS_PATH."validate-session.php");
 
-           $brand->setName($name);
+    $this->showAddBrand($id_brand,"Modificar");
 
-           $category = CategoryDAO::MapearCategory($id_category);
+    
+}
+    public function addBrand($name){
 
-           $brand->setCategory($category);
+        require_once(VIEWS_PATH."validate-session.php");
 
-           try {
+            $Brand = new Brand();
+
+            $Brand->setName($name);
+    
+
+            try {
+
+                $result = $this->brandDao->addBrand($Brand);
                
-           $result = $this->brandDao->addBrand($brand);
+                if($result == 1)
 
-           if( $result == 1)
-             $this->showAddBrand("se agrego una marca para la categoria " . $category->getName()."<br>");
-           else
-           $this->showAddBrand(" ERROR..AL INGRESAR LA MARCA !!! ");
+                $this->showAddBrand($id_brand = null,"Marca agregada");
+                else
+                $this->showAddBrand($id_brand = null,"ERROR..AL AGREGAR LA MARCA");
 
+            
+                
             }catch (PDOException $ex){
 
-            if(Functions::contains_substr($ex->getMessage(),"Duplicate entry"))
-            $this->showAddBrand($id_category," ya esta ingresada la marca para la categoria  " . $category->getName() ."<br>");
+                if(Functions::contains_substr($ex->getMessage(),"Duplicate entry"))
+                 $this->showAddBrand($id_brand = null,"ya existe una marca con ese nombre");
+            }
+
+            
+    }
+
+    public function RemoveBrand($id_brand)
+        {
+            require_once(VIEWS_PATH."validate-session.php");
+
+            try{
+
+            $result = $this->brandDao->DeleteBrand($id_brand);
+            
+            if($result == 1){
+
+            $this->showAddBrand($id_brand = null,"Marca eliminada");
+              
+        }else{
+
+            $this->showAddBrand($id_brand = null,"ERROR: System error, reintente");
+            
+           }
+           
+        } catch(PDOException $ex){
+
+            $message = $ex->getMessage();
+
+            if(Functions::contains_substr($message, "Result consisted of more than one row")) {
+
+               
+                $this->showAddBrand($id_brand = null,"Hay datos asociados No se pobra borrar la Marca");
+               
+
+            }
         }
 
+    }
+
+    public function ModifyBrand($id_brand ,$name){
+
+        require_once(VIEWS_PATH."validate-session.php");
+
+        try{
+
+        $result = $this->brandDao->ModifyBrand($id_brand,$name);
+       
+        if($result == 1)
+        $this->showAddBrand($id_brand = null,"Marca Editada");
+        else
+        $this->showAddBrand($id_brand = null,"ERROR..AL AGREGAR LA MARCA");
+
+    } catch (PDOException $ex){
+
+        if(Functions::contains_substr($ex->getMessage(),"Duplicate entry"))
+
+         $this->showAddBrand($id_brand = null,"ya existe una marca con ese nombre");
+    }
 
     }
+
 }
 
 ?>
