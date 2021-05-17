@@ -20,6 +20,11 @@ class UserController{
         require_once(VIEWS_PATH."homeBelcome.php");
     }
 
+    public function Home($message = ""){
+
+        require_once(VIEWS_PATH."home.php");
+    }
+
     public function listProduct($message = ""){
 
         require_once(VIEWS_PATH."validate-session.php");

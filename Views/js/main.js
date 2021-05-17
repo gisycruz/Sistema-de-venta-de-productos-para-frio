@@ -29,19 +29,20 @@ $(document).ready(function(){
     /*Salir del sistema*/
     $('.btn-exit').on('click', function(){
     	swal({
-		  	title: 'You want out of the system?',
-		 	text: "The current session will be closed and will leave the system",
+		title: '¿Quiere salir del Sistema?',
+		 	text: " La seccion actual se cerrara y saldra del Sistema",
 		  	type: 'warning',
 		  	showCancelButton: true,
-		  	confirmButtonText: 'Yes, exit',
+		  	confirmButtonText: 'Si',
 		  	closeOnConfirm: false
 		},
 		function(isConfirm) {
 		  	if (isConfirm) {
-		    	window.location='index.html'; 
+		    	window.location='../User/logout'; 
 		  	}
 		});
     });
+	
     /*Mostrar y ocultar submenus*/
     $('.btn-subMenu').on('click', function(){
     	var subMenu=$(this).next('ul');

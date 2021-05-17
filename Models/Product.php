@@ -7,11 +7,16 @@ class Product
 
     private $id_product;
     private $code;
+    private $category;
     private $brand;
     private $descriptionP;
+    private $provider;
     private $dataSheet;
     private $quantity;
-    private $price;  
+    private $priceDollar; 
+    private $priceBuy;
+    private $priceIVA;
+    private $priceSale; 
 
 
     /**
@@ -55,6 +60,46 @@ class Product
     }
 
     /**
+     * Get the value of category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set the value of category
+     *
+     * @return  self
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of brand
+     */
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+
+    /**
+     * Set the value of brand
+     *
+     * @return  self
+     */
+    public function setBrand($brand)
+    {
+        $this->brand = $brand;
+
+        return $this;
+    }
+
+    /**
      * Get the value of descriptionP
      */
     public function getDescriptionP()
@@ -70,6 +115,26 @@ class Product
     public function setDescriptionP($descriptionP)
     {
         $this->descriptionP = $descriptionP;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of provider
+     */
+    public function getProvider()
+    {
+        return $this->provider;
+    }
+
+    /**
+     * Set the value of provider
+     *
+     * @return  self
+     */
+    public function setProvider($provider)
+    {
+        $this->provider = $provider;
 
         return $this;
     }
@@ -116,39 +181,46 @@ class Product
 
     
 
-    
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    
-    public function setPrice($price)
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
     /**
-     * Get the value of brand
+     * Get the value of priceBuy
      */
-    public function getBrand()
+    public function getPriceBuy()
     {
-        return $this->brand;
+        return $this->priceBuy;
     }
 
     /**
-     * Set the value of brand
+     * Set the value of priceBuy
      *
      * @return  self
      */
-    public function setBrand($brand)
+    public function setPriceBuy($priceBuy)
     {
-        $this->brand = $brand;
+        $this->priceBuy = $priceBuy;
 
         return $this;
     }
+
+    /**
+     * Get the value of priceIVA
+     */
+    public function getPriceIVA()
+    {
+        return $this->priceIVA;
+    }
+
+    /**
+     * Set the value of priceIVA
+     *
+     * @return  self
+     */
+    public function setPriceIVA($priceIVA)
+    {
+        $this->priceIVA = $priceIVA;
+
+        return $this;
+    }
+    
 }
 
 ?>

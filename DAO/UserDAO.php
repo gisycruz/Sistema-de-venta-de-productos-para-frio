@@ -33,7 +33,12 @@ class UserDAO implements Iuser{
 
             $user = new User();
             $user->setId_User($p["id_user"]);
+            $user->setDni($p['dni']);
+            $user->setName($p['name']);
+            $user->setLastName($p['lastName']);
+            $user->setPhone($p['phone']);
             $user->setEmail($p['email']);
+            $user->setAddress($p['address']);
             $user->setPassword($p['password']);
 
             return $user;

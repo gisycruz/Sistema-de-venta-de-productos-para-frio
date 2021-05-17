@@ -2,79 +2,7 @@
 require_once(VIEWS_PATH."validate-session.php");
     include_once('nav.php');
 ?>
-
-<div id="breadcrumb" class="hoc clear"> 
-    <h6 class="heading">Ingreso de Producto</h6>
-  </div>
 </div>
-<div class="wrapper row3" >
-  <main class="container" style="width: 95%;"> 
-    <!-- main body -->
-    <div class="content" > 
-      <div id="comments" style="align-items:center;">
-        <h2>  Categoria : <?php echo $brand->getCategory()->getName() . "<br>  Marca : " . $brand->getName(); ?></h2>
-        <form action="" method="post" style="background-color: #EAEDED;padding: 2rem !important;">
-          <table> 
-            <thead>
-              <tr>
-                <th>Codigo</th>
-                <th>Potencia</th>
-                <th>Tipo de gas</th>
-                <th>Aplicacion</th>
-                <th>Cantidad</th>
-                <th>Precio de costo $</th>
-              </tr>
-            </thead>
-            <tbody align="center">
-              <tr>
-                <td style="max-width: 200px;">    
-                  <input type="text" name="code" required>
-                </td>
-                 <td>
-                  <select name="power" style="margin-top: 3%;min-height: 35px;height: 20px" required>
-                  <?php if(isset($listPower)){ foreach( $listPower as $power){ ?>
-                    <option value="<?php echo $power->getId_power();?>"><?php echo $power->getDescription();?></option> 
-                    <?php } } ?>               
-                  </select>
-                </td>
-                <td>
-                  <select name="gasType"  style="margin-top: 3%;min-height: 35px;height: 20px" required>
-                  <?php if(isset($listGasType)){ foreach($listGasType as $gastype){ ?>
-                    <option value="<?php echo $gastype->getId_gasType();?>"><?php echo $gastype->getName();?></option> 
-                    <?php } } ?>               
-                  </select>
-                </td>
-                <td>
-                  <select name="aplication"  style="margin-top: 3%;min-height: 35px;height: 20px" required>
-                  <?php if(isset($listAplication)){ foreach($listAplication as $aplication){ ?>
-                    <option value="<?php echo $aplication->getId_aplication();?>"><?php echo $aplication->getName();?></option> 
-                    <?php } } ?>               
-                  </select>
-                </td>
-                <td>
-                  <input type="number" name="quantity" min="0" style="max-width: 120px" required>
-                </td>
-                <td>
-                  <input type="number" name="price" min="0" style="max-width: 120px" required>
-                </td>        
-              </tr>
-              </tbody>
-          </table>
-          <div>
-          <button class="btn" style="font-size: 12px" type="submit" name ="id_brand" value = "<?php  echo $brand->getId_brand();?>" >Agregar Producto</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- / main body -->
-    <div class="clear"></div>
-  </main>
-</div>
-
-
-<?php 
-    include_once('footer.php');
-?>
  <!-- pageContent -->
  <section class="full-width pageContent">
 		<section class="full-width header-well">
@@ -87,95 +15,103 @@ require_once(VIEWS_PATH."validate-session.php");
 		</section>
 		<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 			<div class="mdl-tabs__tab-bar">
-				<a href="#tabNewProduct" class="mdl-tabs__tab is-active">NEW</a>
-				<a href="#tabListProducts" class="mdl-tabs__tab">LIST</a>
+				<a href="#tabNewProduct" class="mdl-tabs__tab is-active">NUEVO PRODUCTO</a>
+				<a href="#tabListProducts" class="mdl-tabs__tab">LISTAR PRODUCTO</a>
 			</div>
 			<div class="mdl-tabs__panel is-active" id="tabNewProduct">
 				<div class="mdl-grid">
 					<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
 						<div class="full-width panel mdl-shadow--2dp">
 							<div class="full-width panel-tittle bg-primary text-center tittles">
-								New Product
+								Nuevo Producto
 							</div>
 							<div class="full-width panel-content">
 								<form>
 									<div class="mdl-grid">
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
-											<h5 class="text-condensedLight">Basic Information</h5>
+											<h5 class="text-condensedLight">Informacion Basica</h5>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-												<input class="mdl-textfield__input" type="number" pattern="-?[0-9- ]*(\.[0-9]+)?" id="BarCode">
-												<label class="mdl-textfield__label" for="BarCode">Barcode</label>
-												<span class="mdl-textfield__error">Invalid barcode</span>
-											</div>
-											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-												<input class="mdl-textfield__input" type="text" pattern="-?[A-Za-z0-9áéíóúÁÉÍÓÚ ]*(\.[0-9]+)?" id="NameProduct">
-												<label class="mdl-textfield__label" for="NameProduct">Name</label>
-												<span class="mdl-textfield__error">Invalid name</span>
+												<input class="mdl-textfield__input" type="number" name ="BarCode" pattern="-?[0-9- ]*(\.[0-9]+)?" id="BarCode" required>
+												<label class="mdl-textfield__label" for="BarCode">Codigo</label>
+												<span class="mdl-textfield__error">Codido Invalido</span>
 											</div>
 											<div class="mdl-textfield mdl-js-textfield">
-												<select class="mdl-textfield__input">
-													<option value="" disabled="" selected="">Select category</option>
-													<option value="">Category 1</option>
-													<option value="">Category 2</option>
+												<select class="mdl-textfield__input" name = "category" required>
+													<option  disabled="" selected="">Seleccionar Categoria</option>
+													<?php if(isset($listCategory)){ foreach($listCategory as $Category){ ?>
+                                                    <option value="<?php echo $Category->getId_Category();?>"><?php echo $Category->getName();?></option> 
+                                                    <?php } } ?>    
 												</select>
 											</div>
-											<h5 class="text-condensedLight">Units and Price</h5>
+											<div class="mdl-textfield mdl-js-textfield">
+												<select class="mdl-textfield__input" name = "brand" required>
+													<option  disabled="" selected="">Seleccionar Marcar</option>
+													<?php if(isset($listBrand)){ foreach($listBrand as $Brand){ ?>
+                                                    <option value="<?php echo $Brand->getId_Brand();?>"><?php echo $Brand->getName();?></option> 
+                                                    <?php } } ?>    
+												</select>
+											</div>
+											<div class="mdl-textfield mdl-js-textfield">
+												<select class="mdl-textfield__input" name = "provider" required>
+													<option disabled="" selected="">Seleccionar Proveedor</option>
+													<?php if(isset($listProvider)){ foreach($listProvider as $Provider){ ?>
+                                                    <option value="<?php echo $Provider->getIdProvider();?>"><?php echo $Provider->getName();?></option> 
+                                                    <?php } } ?>    
+												</select>
+										    </div>
+											<h5 class="text-condensedLight">Unidad y Precios</h5>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-												<input class="mdl-textfield__input" type="number" pattern="-?[0-9]*(\.[0-9]+)?" id="StrockProduct">
-												<label class="mdl-textfield__label" for="StrockProduct">Units</label>
-												<span class="mdl-textfield__error">Invalid number</span>
+												<input class="mdl-textfield__input" type="number" name =StrockProduct  pattern="-?[0-9]*(\.[0-9]+)?" id="StrockProduct" required>
+												<label class="mdl-textfield__label" for="StrockProduct">Unidad</label>
+												<span class="mdl-textfield__error">Numero Invalido</span>
 											</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<input class="mdl-textfield__input" type="text" pattern="-?[0-9.]*(\.[0-9]+)?" id="PriceProduct">
-												<label class="mdl-textfield__label" for="PriceProduct">Price</label>
-												<span class="mdl-textfield__error">Invalid price</span>
+												<label class="mdl-textfield__label" for="PriceProduct">Precio de Compra</label>
+												<span class="mdl-textfield__error">Precio Invalido</span>
 											</div>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 												<input class="mdl-textfield__input" type="number" pattern="-?[0-9]*(\.[0-9]+)?" id="discountProduct">
-												<label class="mdl-textfield__label" for="discountProduct">% Discount</label>
-												<span class="mdl-textfield__error">Invalid discount</span>
+												<label class="mdl-textfield__label" for="discountProduct">% Descuentos</label>
+												<span class="mdl-textfield__error">descuento Invalido </span>
 											</div>	
 										</div>
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
-											<h5 class="text-condensedLight">Supplier data and model</h5>
+											<h5 class="text-condensedLight">Descripcion del Producto</h5>
 											<div class="mdl-textfield mdl-js-textfield">
-												<select class="mdl-textfield__input">
-													<option value="" disabled="" selected="">Select provider</option>
-													<option value="">Provider 1</option>
-													<option value="">Provider 2</option>
-												</select>
-											</div>
-											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-												<input class="mdl-textfield__input" type="text"  id="modelProduct">
-												<label class="mdl-textfield__label" for="modelProduct">Model</label>
-												<span class="mdl-textfield__error">Invalid model</span>
-											</div>
-											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-												<input class="mdl-textfield__input" type="text" id="markProduct">
-												<label class="mdl-textfield__label" for="markProduct">Mark</label>
-												<span class="mdl-textfield__error">Invalid Mark</span>
-											</div>
-											<h5 class="text-condensedLight">Other Data</h5>
-											<div class="mdl-textfield mdl-js-textfield">
-												<input type="date" class="mdl-textfield__input">
-											</div>
-											<div class="mdl-textfield mdl-js-textfield">
-												<select class="mdl-textfield__input">
-													<option value="" disabled="" selected="">Select status</option>
-													<option value="">Active</option>
-													<option value="">deactivated</option>
+												<select class="mdl-textfield__input" name ="GasType" required>
+													<option  disabled="" selected="">Seleccionar Tipo de Gas</option>
+													<?php if(isset($listGasType)){ foreach($listGasType as $GasType){ ?>
+                                                    <option value="<?php echo $GasType->getId_GasType();?>"><?php echo $GasType->getName();?></option> 
+                                                    <?php } } ?>    
 												</select>
 											</div>
 											<div class="mdl-textfield mdl-js-textfield">
-												<input type="file">
+												<select class="mdl-textfield__input" name = "Aplication" required>
+													<option  disabled="" selected="">Seleccionar Tipo de Aplicacion</option>
+													<?php if(isset($listAplication)){ foreach($listAplication as $Aplication){ ?>
+                                                    <option value="<?php echo $Aplication->getId_Aplication();?>"><?php echo $Aplication->getName();?></option> 
+                                                    <?php } } ?>    
+												</select>
+											</div>
+											<div class="mdl-textfield mdl-js-textfield">
+												<select class="mdl-textfield__input" name = "Power" required>
+													<option disabled="" selected="">Seleccionar Tipo de potencia</option>
+													<?php if(isset($listPower)){ foreach($listPower as $Power){ ?>
+                                                    <option value="<?php echo $Power->getId_Power();?>"><?php echo $Power->getDescription();?></option> 
+                                                    <?php } } ?>    
+												</select>
+											</div>
+											<h5 class="text-condensedLight">Agregar Ficha Tecnica</h5>
+											<div class="mdl-textfield mdl-js-textfield">
+												<input type="file"> <!--FILE creo una carpeta donde guardo eso file y dedonde lo puede descargar si -->
 											</div>
 										</div>
-									</div>
 									<p class="text-center">
-										<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addProduct">
+										<button type = "submit" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addProduct">
 											<i class="zmdi zmdi-plus"></i>
 										</button>
-										<div class="mdl-tooltip" for="btn-addProduct">Add Product</div>
+										<div class="mdl-tooltip" for="btn-addProduct">Agregar Producto</div>
 									</p>
 								</form>
 							</div>
@@ -273,4 +209,6 @@ require_once(VIEWS_PATH."validate-session.php");
 		</div>
 	</section>
 </body>
-</html> 
+<?php 
+    include_once('footer.php');
+?>

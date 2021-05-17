@@ -81,7 +81,7 @@
 						<i class="zmdi zmdi-power"></i>
 						<div class="mdl-tooltip" for="btn-exit">Cerrar seccion</div>
 					</li>
-					<li class="text-condensedLight noLink" ><small>Usuario <?php echo $_SESSION['login']->getEmail();?></small></li>
+					<li class="text-condensedLight noLink" ><small>Usuario <?php echo $_SESSION['login']->getName() . " ". $_SESSION['login']->getLastName();?></small></li>
 					<li class="noLink">
 						<figure>
 							<img src="<?php echo IMG_PATH."avatar-male2.png";?>" alt="Avatar" class="img-responsive">
@@ -103,7 +103,7 @@
 					<img src="<?php echo IMG_PATH."avatar-male2.png";?>" alt="Avatar" class="img-responsive">
 				</div>
 				<figcaption class="navLateral-body-cr hide-on-tablet">
-				<?php echo $_SESSION['login']->getEmail();?>	<span>
+				<?php echo $_SESSION['login']->getName() . " " . $_SESSION['login']->getLastName();?>	<span>
 						<br>
 						<small>Admin</small>
 					</span>
@@ -157,7 +157,7 @@
 								</a>
 							</li>
 							<li class="full-width">
-								<a href="providers.html" class="full-width">
+								<a href="<?php echo FRONT_ROOT."Provider/showAddProvider";?>"" class="full-width">
 									<div class="navLateral-body-cl">
 										<i class="zmdi zmdi-truck"></i>
 									</div>
@@ -234,7 +234,7 @@
 					</li>
 					<li class="full-width divider-menu-h"></li>
 					<li class="full-width">
-						<a href="products.html" class="full-width">
+						<a href="<?php echo FRONT_ROOT."Product/showAddProduct";?>" class="full-width">
 							<div class="navLateral-body-cl">
 								<i class="zmdi zmdi-washing-machine"></i>
 							</div>

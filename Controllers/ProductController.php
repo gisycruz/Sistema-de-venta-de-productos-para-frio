@@ -2,11 +2,12 @@
 
 namespace Controllers;
 
-
-use DAO\BrandDAO as BrandDAO ;
 use DAO\PowerDAO as PowerDAO;
 use DAO\GasTypeDAO as GasTypeDAO;
 use DAO\AplicationDAO as AplicationDAO;
+use DAO\BrandDAO as  BrandDAO;
+use DAO\CategoryDAO as CategoryDAO;
+use DAO\ProviderDAO as ProviderDAO; 
 use Models\DescriptionProduct as DescriptionProduct;
 use DAO\DescriptionProductDAO as DescriptionProductDAO;
 use Models\Product as Product;
@@ -18,6 +19,9 @@ class ProductController
     private $aplicationDao;
     private $descriptionPDao;
     private $productDao;
+    private $categoryDao;
+    private $brandDao;
+    private $providerDao ;
 
 
     public function __construct(){
@@ -26,11 +30,12 @@ class ProductController
         $this->gasTypeDao = GasTypeDAO::GetInstance();
         $this->aplicationDao = AplicationDAO::GetInstance();
         $this->descriptionPDao = DescriptionProductDAO::GetInstance();
+        $this->categoryDao = CategoryDAO::GetInstance();
+        $this->brandDao = BrandDAO::GetInstance();
+        $this->providerDao = ProviderDAO::GetInstance();
     }
 
-    public function showAddProduct($id_brand , $message = ""){
-
-        $brand = BrandDAO::MapearBrand($id_brand);
+    public function showAddProduct($message = ""){
 
         $listPower = $this->powerDao->GetAllPower();
 
@@ -38,15 +43,16 @@ class ProductController
 
         $listAplication = $this->aplicationDao->getAllAplication();
 
+        $listCategory = $this->categoryDao->getAllCategory();
+
+        $listBrand = $this->brandDao->getAllBrand();
+        
+        $listProvider = $this->providerDao->getAllProvider();
+
         require_once(VIEWS_PATH."add-product.php");
     }
  
-    public function showListProduc($message = ""){
-
-          $listProduc = $this->
-    }
-    
-
+   
     public function addProduct($code ,$id_power, $id_gasType , $id_aplication,$quantity,$price ,$id_brand){
 
 
@@ -93,7 +99,7 @@ class ProductController
 
         }
         
-        $product->set
+       
 
 
     }
