@@ -10,7 +10,9 @@ require_once(VIEWS_PATH."validate-session.php");
 				<i class="zmdi zmdi-washing-machine"></i>
 			</div>
 			<div class="full-width header-well-text">
-			
+			<p class="text-condensedLight">
+				<?php if(isset($message) && !empty($message)){ echo  $message;}?>	
+				</p>
 			</div>
 		</section>
 		<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
@@ -26,12 +28,12 @@ require_once(VIEWS_PATH."validate-session.php");
 								Nuevo Producto
 							</div>
 							<div class="full-width panel-content">
-								<form>
+								<form action="<?php echo FRONT_ROOT."Product/addProduct";?>" method="get" >
 									<div class="mdl-grid">
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
 											<h5 class="text-condensedLight">Informacion Basica</h5>
 											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-												<input class="mdl-textfield__input" type="number" name ="BarCode" pattern="-?[0-9- ]*(\.[0-9]+)?" id="BarCode" required>
+												<input class="mdl-textfield__input" type="text" name ="BarCode"  id="BarCode" required>
 												<label class="mdl-textfield__label" for="BarCode">Codigo</label>
 												<span class="mdl-textfield__error">Codido Invalido</span>
 											</div>
@@ -55,27 +57,11 @@ require_once(VIEWS_PATH."validate-session.php");
 												<select class="mdl-textfield__input" name = "provider" required>
 													<option disabled="" selected="">Seleccionar Proveedor</option>
 													<?php if(isset($listProvider)){ foreach($listProvider as $Provider){ ?>
-                                                    <option value="<?php echo $Provider->getIdProvider();?>"><?php echo $Provider->getName();?></option> 
+                                                    <option value="<?php echo $Provider->getId_Provider();?>"><?php echo $Provider->getLastName();?></option> 
                                                     <?php } } ?>    
 												</select>
 										    </div>
-											<h5 class="text-condensedLight">Unidad y Precios</h5>
-											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-												<input class="mdl-textfield__input" type="number" name =StrockProduct  pattern="-?[0-9]*(\.[0-9]+)?" id="StrockProduct" required>
-												<label class="mdl-textfield__label" for="StrockProduct">Unidad</label>
-												<span class="mdl-textfield__error">Numero Invalido</span>
 											</div>
-											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-												<input class="mdl-textfield__input" type="text" pattern="-?[0-9.]*(\.[0-9]+)?" id="PriceProduct">
-												<label class="mdl-textfield__label" for="PriceProduct">Precio de Compra</label>
-												<span class="mdl-textfield__error">Precio Invalido</span>
-											</div>
-											<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-												<input class="mdl-textfield__input" type="number" pattern="-?[0-9]*(\.[0-9]+)?" id="discountProduct">
-												<label class="mdl-textfield__label" for="discountProduct">% Descuentos</label>
-												<span class="mdl-textfield__error">descuento Invalido </span>
-											</div>	
-										</div>
 										<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
 											<h5 class="text-condensedLight">Descripcion del Producto</h5>
 											<div class="mdl-textfield mdl-js-textfield">
@@ -104,8 +90,9 @@ require_once(VIEWS_PATH."validate-session.php");
 											</div>
 											<h5 class="text-condensedLight">Agregar Ficha Tecnica</h5>
 											<div class="mdl-textfield mdl-js-textfield">
-												<input type="file"> <!--FILE creo una carpeta donde guardo eso file y dedonde lo puede descargar si -->
+												<input type="text" name = "dataSheet" value =""> <!--FILE creo una carpeta donde guardo eso file y dedonde lo puede descargar si -->
 											</div>
+										</div>
 										</div>
 									<p class="text-center">
 										<button type = "submit" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addProduct">

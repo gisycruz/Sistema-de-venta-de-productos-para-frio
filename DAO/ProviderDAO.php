@@ -36,7 +36,7 @@ use DAO\IProvider as IProvider;
 
             $Provider = new Provider();
 
-            $Provider->setIdProvider($p["id_provider"]);
+            $Provider->setId_Provider($p["id_provider"]);
             $Provider->setDni($p['dni']);
             $Provider->setName($p['name']);
             $Provider->setLastName($p['lastName']);

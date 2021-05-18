@@ -12,13 +12,7 @@ class Product
     private $descriptionP;
     private $provider;
     private $dataSheet;
-    private $quantity;
-    private $priceDollar; 
-    private $priceBuy;
-    private $priceIVA;
-    private $priceSale; 
-
-
+    
     /**
      * Get the value of id_product
      */
@@ -159,68 +153,4 @@ class Product
         return $this;
     }
 
-    /**
-     * Get the value of quantity
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
-
-    /**
-     * Set the value of quantity
-     *
-     * @return  self
-     */
-    public function setQuantity($quantity)
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    
-
-    /**
-     * Get the value of priceBuy
-     */
-    public function getPriceBuy()
-    {
-        return $this->priceBuy;
-    }
-
-    /**
-     * Set the value of priceBuy
-     *
-     * @return  self
-     */
-    public function setPriceBuy($priceBuy)
-    {
-        $this->priceBuy = $priceBuy;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of priceIVA
-     */
-    public function getPriceIVA()
-    {
-        return $this->priceIVA;
-    }
-
-    /**
-     * Set the value of priceIVA
-     *
-     * @return  self
-     */
-    public function setPriceIVA($priceIVA)
-    {
-        $this->priceIVA = $priceIVA;
-
-        return $this;
-    }
-    
 }
-
-?>

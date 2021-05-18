@@ -6,7 +6,7 @@ use Models\DescriptionProduct as DescriptionProduct;
 
 interface IdescriptionProduct{
 
-    function addDescriptionProduc(DescriptionProduct $descriptionProduct);
+    function addDescriptionProduct(DescriptionProduct $descriptionProduct);
     function getAllDescriptionProduc();
     function deleteDescriptionProduct($id_descriptionProduct);
     function GetDescriptionProductForId($id_dp);

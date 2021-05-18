@@ -9,7 +9,7 @@ class Provider extends Person {
     /**
      * Get the value of id_provider
      */
-    public function getIdProvider()
+    public function getId_provider()
     {
         return $this->id_provider;
     }
@@ -19,7 +19,7 @@ class Provider extends Person {
      *
      * @return  self
      */
-    public function setIdProvider($id_provider)
+    public function setId_provider($id_provider)
     {
         $this->id_provider = $id_provider;
 

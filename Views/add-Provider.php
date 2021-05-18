@@ -10,7 +10,7 @@ require_once(VIEWS_PATH."validate-session.php");
 			</div>
 			<div class="full-width header-well-text">
 				<p class="text-condensedLight">
-                <?php if(isset($message) && !empty($message)){ echo  $message;}?>	
+                <?php if(isset($message) && !empty($message)){ echo $message;}?>	
 				</p>
 			</div>
 		</section>
@@ -120,9 +120,9 @@ require_once(VIEWS_PATH."validate-session.php");
 											<span class="mdl-list__item-sub-title"><?php echo $Provider->getDni() ;?></span>
 										</span>
                                       <div>
-                                        <a class="mdl-list__item-secondary-action" href="<?php $message ="Datos del Proveedor"; echo FRONT_ROOT."Provider/showAddProvider?id_Provider=".$Provider->getIdProvider()."&mensage =".$message ;?>"><i class="zmdi zmdi-more"></i></a>
-                                        <button><a class="mdl-list__item-secondary-action" href="<?php echo FRONT_ROOT."Provider/ShowModify?id_Provider=".$Provider->getIdProvider();?>"><i class="zmdi zmdi-edit" ></i> Editar</a></button>	
-									    <button><a class="mdl-list__item-secondary-action" href="<?php echo FRONT_ROOT."Provider/RemoverProvider?id_Provider=".$Provider->getIdProvider();?>"><i class="zmdi zmdi-delete"> </i> Eliminar</a></button>
+                                        <a class="mdl-list__item-secondary-action" href="<?php $message ="Datos del Proveedor"; echo FRONT_ROOT."Provider/showAddProvider?id_Provider=".$Provider->getId_Provider()."&mensage =".$message ;?>"><i class="zmdi zmdi-more"></i></a>
+                                        <button><a class="mdl-list__item-secondary-action" href="<?php echo FRONT_ROOT."Provider/ShowModify?id_Provider=".$Provider->getId_Provider();?>"><i class="zmdi zmdi-edit" ></i> Editar</a></button>	
+									    <button><a class="mdl-list__item-secondary-action" href="<?php echo FRONT_ROOT."Provider/RemoverProvider?id_Provider=".$Provider->getId_Provider();?>"><i class="zmdi zmdi-delete"> </i> Eliminar</a></button>
                                        </div>
 									</div>
 									<li class="full-width divider-menu-h"></li>

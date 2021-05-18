@@ -2,11 +2,13 @@
 
 namespace DAO;
 
+use Models\Product as Product;
 use DAO\Connection as Connection;
 use DAO\Iproduct as Iproduct;
-use Models\Product as Product;
+use DAO\CategoryDAO as CategoryDAO;
 use DAO\DescriptionProductDAO as DescriptionProductDAO;
 use DAO\BrandDAO as BrandDAO;
+use DAO\ProviderDAO as ProviderDAO;
 
 class ProductDAO implements Iproduct{
 
@@ -39,11 +41,12 @@ class ProductDAO implements Iproduct{
             $product = new Product();
             $product->setId_product($p["id_product"]);
             $product->setCode($p['code']);
-            $product->setBrand(BrandDAO::MapearBrand($p['idbrand']))
+            $product->setCategory(CategoryDAO::MapearCategory($p['idcategory']));
+            $product->setBrand(BrandDAO::MapearBrand($p['idbrand']));
             $product->setDescriptionP(DescriptionProductDAO::MapearDescriptionProduct($p['iddescriptionP']));
+            $product->setProvider(ProviderDAO::MapearProvider($p['idproveder']));
             $product->setDataSheet($p['dataSheet']);
-            $product->setQuantity($p['quantity']);
-            $product->setPrice($p['price']);
+           
 
             return $product;
         }, $value);
@@ -55,21 +58,21 @@ class ProductDAO implements Iproduct{
 
         $ProductDAO = ProductDAO::GetInstance();
  
-        return $ProductDAO->GetProductForId($id_power);
+        return $ProductDAO->GetProductForId($id_product);
      }
 
 
      public function addProduct(Product $product){
 
-        $query = " INSERT INTO " . $this->nameTable . " (code , idbrand , iddescriptionP , dataSheet , quantity , price ) value (:code,:idbrand,:iddescriptionP,:dataSheet , :quantity , :price)";
+        $query = " INSERT INTO " . $this->nameTable . " (code , idcategory , idbrand ,iddescriptionP ,idprovider ,dataSheet ) value (:code , :idcategory , :idbrand , :iddescriptionP , :idprovider , :dataSheet )";
 
         $parameters['code'] = $product->getCode();
+        $parameters['idcategory'] = $product->getCategory()->getId_category();
         $parameters['idbrand'] = $product->getBrand()->getId_brand();
         $parameters['iddescriptionP'] = $product->getDescriptionP()->getId_dp();
+        $parameters['idprovider'] = $product->getProvider()->getId_provider();
         $parameters['dataSheet'] = $product->getDataSheet();
-        $parameters['quantity'] = $product->getQuantity();
-        $parameters['price'] = $product->getPrice();
-
+       
         try {
 
           $result =  $this->connection->ExecuteNonQuery($query , $parameters);
@@ -124,7 +127,7 @@ class ProductDAO implements Iproduct{
     }
     public function deleteProduct($id_product){
 
-        $query = " DELETE FROM " . $this->nameTable . " where id_product = (:id_product) ";
+        $query = "  ";
 
         $parameters['id_product'] = $id_product;
 
@@ -138,6 +141,54 @@ class ProductDAO implements Iproduct{
         }
 
         return $result;
+    }
+
+
+    public function ModifyProduct($id_product ,$code , $id_category , $id_brand ,$id_descriptionP ,$id_provider ,$dataSheet) {
+
+        $query = " UPDATE " . $this->nameTable . " SET  code = (:code) , idcategory = (:idcategory) , idbrand = (:idbrand) , iddescription = (:iddescription) , idprovider = (:idprovider) , dataSheet = (:dataSheet)   WHERE  id_Product = (:id_Product) ";
+      
+        $parameters['code'] = $code;
+        $parameters["idcategory"] = $id_category;
+        $parameters['idbrand'] = $id_brand;
+        $parameters['iddescription'] = $id_description;
+        $parameters['idprovider'] = $id_provider;
+        $parameters['dataSheet'] = $dataSheet;
+        $parameters["id_Product"] =$id_Product;
+
+        try {
+          
+        $result = $this->connection->ExecuteNonQuery($query, $parameters);
+
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+        return $result;
+
+    }
+    public  function GetProductForId($id_Product){
+        
+        $query = " SELECT * FROM " . $this->nameTable . " where id_Product = (:id_Product) ";
+
+        $parameters['id_Product'] = $id_Product;
+
+        try {
+            
+           $result = $this->connection->Execute($query, $parameters);
+          
+        } catch (Exception $ex) {
+            throw $ex;
+        }
+
+        $Product = null;
+
+        if(!empty($result)){
+
+           $Product = $this->Mapear($result);
+        }
+       
+        return $Product;
+
     }
 
      

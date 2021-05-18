@@ -1,7 +1,7 @@
 create database if not exists coldProduct;
 drop database coldproduct;
-use coldProduct;
 
+use coldProduct;
 create table if not exists User(
 id_user TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
 dni varchar(9) not null ,
@@ -79,28 +79,34 @@ constraint fk_idaplication foreign key (idaplication) references aplication(id_a
 constraint fk_idpower foreign key (idpower) references power ( id_power)
 )engine = InnoDB;
 
-
-
 create table if not exists Product(
 id_product TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
-code varchar(50) not null,
+code varchar(50) not null unique,
 idcategory TINYINT UNSIGNED NOT NULL,
 idbrand TINYINT UNSIGNED NOT NULL,
 iddescriptionP TINYINT UNSIGNED NOT NULL,
 idprovider TINYINT UNSIGNED NOT NULL,
 dataSheet varchar(50) not null,
-quantity SMALLINT UNSIGNED NOT NULL,
-price_dollar DECIMAL(10, 2) DEFAULT 0 not null,
-price_buy DECIMAL(10, 2) DEFAULT 0 not null,
-price_pesos DECIMAL(10, 2) DEFAULT 0 not null,
-price_Iva DECIMAL(10, 2) DEFAULT 0 not null,
-price_sale DECIMAL(10, 2) DEFAULT 0 not null,
 constraint pk_idproduct primary key (id_product),
 constraint fk_idcategory foreign key (idcategory) references category(id_category) on update CASCADE ,
 constraint fk_idbrand foreign key (idbrand) references brand(id_brand) on update CASCADE,
 constraint fk_iddescriptionP foreign key (iddescriptionP) references descriptionProduct(id_dp) on update CASCADE,
 constraint fk_idprovider foreign key (idprovider) references provider(id_provider) on update CASCADE
 )engine = InnoDB;
+
+create table if not exists Buy(
+id_buy TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
+idproduct TINYINT UNSIGNED NOT NULL,
+quantity SMALLINT UNSIGNED NOT NULL,
+price_dollar DECIMAL(10, 2) DEFAULT 0 not null,
+price_buy DECIMAL(10, 2) DEFAULT 0 not null,
+price_pesos DECIMAL(10, 2) DEFAULT 0 not null,
+price_Iva DECIMAL(10, 2) DEFAULT 0 not null,
+price_sale DECIMAL(10, 2) DEFAULT 0 not null,
+constraint pk_idbuy primary key (id_buy),
+constraint fk_idproduct foreign key (idproduct) references product(id_product) on update CASCADE
+)engine = InnoDB;
+
 
 DELIMITER $$
 create procedure deleteCategory(idcategorys int)
@@ -178,6 +184,19 @@ if(idproduct <> 0) then
 SIGNAL sqlstate '11111' SET MESSAGE_TEXT = 'Result consisted of more than one row', MYSQL_ERRNO = 9999;
 else 
 delete from provider where id_provider = idproviders;
+end if;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+create procedure deleteProduct(idProducts int)
+BEGIN
+declare idbuy int default 0;
+select id_buy into idbuy from buy where idProduct = idProducts;
+if(idproduct <> 0) then
+SIGNAL sqlstate '11111' SET MESSAGE_TEXT = 'Result consisted of more than one row', MYSQL_ERRNO = 9999;
+else 
+delete from Product where id_Product = idProducts;
 end if;
 END $$
 DELIMITER ;

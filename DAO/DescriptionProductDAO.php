@@ -58,7 +58,7 @@ class DescriptionProductDAO implements IdescriptionProduct{
        return $descripPDAO->GetDescriptionProductForId($id_dp);
     }
 
-   public function addDescriptionProduc(DescriptionProduct $descriptionProduct){
+   public function addDescriptionProduct(DescriptionProduct $descriptionProduct){
 
        $query = " INSERT INTO ".$this->nameTable . " (idgasType , idaplication ,idpower )  value (:idgasType , :idaplication , :idpower )";
 
