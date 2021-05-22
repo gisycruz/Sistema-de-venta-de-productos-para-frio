@@ -1,30 +1,30 @@
 <?php 
  namespace DAO;
 
- use Models\Category as Category;
+ use Models\Industry as Industry;
 use DAO\Connection as Connection;
-use DAO\Icategory as Icategory;
+use DAO\Iindustry as Iindustry;
 use FFI\Exception;
 
- class CategoryDAO implements Icategory{
+ class IndustryDAO implements Iindustry{
     
     private $connection;
     private $nameTabla;
-    private $listCategory;
+    private $listIndustry;
     private static $instance = null;
 
     public function __construct(){
 
         $this->connection = Connection::GetInstance();
-        $this->nameTable = "category";
-        $this->listCategory = [];
+        $this->nameTable = "Industry";
+        $this->listIndustry = [];
 
     }
 
     public static function GetInstance()
     {
         if(self::$instance == null)
-            self::$instance = new CategoryDAO();
+            self::$instance = new IndustryDAO();
 
         return self::$instance;
     }
@@ -35,26 +35,26 @@ use FFI\Exception;
 
         $resp = array_map(function($p){
 
-            $category = new Category();
-            $category->setId_category($p["id_category"]);
-            $category->setName($p['name']);
+            $Industry = new Industry();
+            $Industry->setId_industry($p["id_industry"]);
+            $Industry->setName($p['name']);
             
 
-            return $category;
+            return $Industry;
         }, $value);
 
         return count($resp) > 1 ? $resp : $resp['0'];
 
 
     }
-    public static function MapearCategory($id_category) {
+    public static function MapearIndustry($id_Industry) {
 
-       $categoryDAO = CategoryDAO::GetInstance();
+       $IndustryDAO = IndustryDAO::GetInstance();
 
-       return $categoryDAO->GetCategoryForId($id_category);
+       return $IndustryDAO->GetIndustryForId($id_Industry);
     }
 
-    public function getAllcategoryDb(){
+    public function getAllIndustryDb(){
            
         $query = " SELECT * FROM " . $this->nameTable ;
 
@@ -70,31 +70,31 @@ use FFI\Exception;
         return $result;
     }
 
-    public function getAllCategory() {
+    public function getAllIndustry() {
 
-        $this->listCategory =[];
+        $this->listIndustry =[];
 
-        $categoryArray = $this->getAllcategoryDb();
-        if(!empty($categoryArray)) {
+        $IndustryArray = $this->getAllIndustryDb();
+        if(!empty($IndustryArray)) {
             
-            $result = $this->Mapear($categoryArray);
+            $result = $this->Mapear($IndustryArray);
             if(is_array($result)) {
-            $this->listCategory = $result;
+            $this->listIndustry = $result;
             }
             else {
                 $arrayResult[0] = $result;
-                $this->listCategory = $arrayResult;
+                $this->listIndustry = $arrayResult;
             }
             
         }
     
-        return $this->listCategory;
+        return $this->listIndustry;
     }
-    public function addCategory(Category $category){
+    public function addIndustry(Industry $Industry){
 
           $query = " INSERT INTO " . $this->nameTable . " (name)  VALUE (:name)";
           
-          $parameters['name'] = $category->getName();
+          $parameters['name'] = $Industry->getName();
 
 
           try {
@@ -107,11 +107,11 @@ use FFI\Exception;
 
           return $result;
     }
-    public function DeleteCategory($id_category){
+    public function DeleteIndustry($id_Industry){
+       
+        $query =" CALL deleteIndustry(?) ";
 
-        $query =" CALL deleteCategory(?) ";
-
-        $parameters['id_category'] = $id_category;
+        $parameters['id_Industry'] = $id_Industry;
 
         try {
             
@@ -124,12 +124,12 @@ use FFI\Exception;
         return $result;
     }
 
-    public function ModifyCategory($id_category,$name) {
+    public function ModifyIndustry($id_Industry,$name) {
 
-        $query = " UPDATE " . $this->nameTable . " SET name = (:name)  WHERE  id_category = (:id_category) ";
+        $query = " UPDATE " . $this->nameTable . " SET name = (:name)  WHERE  id_Industry = (:id_Industry) ";
       
         $parameters["name"] = $name;
-        $parameters["id_category"] =$id_category;
+        $parameters["id_Industry"] =$id_Industry;
         try {
           
         $result = $this->connection->ExecuteNonQuery($query, $parameters);
@@ -140,11 +140,11 @@ use FFI\Exception;
         return $result;
 
     }
-    public  function GetCategoryForId($id_category){
+    public  function GetIndustryForId($id_Industry){
         
-        $query = " SELECT * FROM " . $this->nameTable . " where id_category = (:id_category) ";
+        $query = " SELECT * FROM " . $this->nameTable . " where id_Industry = (:id_Industry) ";
 
-        $parameters['id_category'] = $id_category;
+        $parameters['id_Industry'] = $id_Industry;
 
         try {
             
@@ -154,14 +154,14 @@ use FFI\Exception;
             throw $ex;
         }
 
-        $category = null;
+        $Industry = null;
 
         if(!empty($result)){
 
-           $category = $this->Mapear($result);
+           $Industry = $this->Mapear($result);
         }
        
-        return $category;
+        return $Industry;
 
     }
 

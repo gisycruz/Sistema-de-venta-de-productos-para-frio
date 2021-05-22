@@ -10,6 +10,6 @@ interface IdescriptionProduct{
     function getAllDescriptionProduc();
     function deleteDescriptionProduct($id_descriptionProduct);
     function GetDescriptionProductForId($id_dp);
-
+    function getDescriptionProductEqually($id_power,$id_gasType,$id_aplication);
 }
 ?>

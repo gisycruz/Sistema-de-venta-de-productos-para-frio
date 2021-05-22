@@ -6,7 +6,7 @@ require_once(VIEWS_PATH."validate-session.php");
 <section class="full-width pageContent">
 		<section class="full-width header-well">
 			<div class="full-width header-well-icon">
-				<i class="zmdi"></i>
+				<i class="zmdi zmdi-city-alt"></i>
 			</div>
 			<div class="full-width header-well-text">
 				<p class="text-condensedLight">
@@ -18,32 +18,32 @@ require_once(VIEWS_PATH."validate-session.php");
 		</section>
 		<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 			<div class="mdl-tabs__tab-bar">
-				<a href="#tabNewCategory" class="mdl-tabs__tab is-active">Nueva Categoria</a>
-				<a href="#tabListCategory" class="mdl-tabs__tab">Listar Categorias</a>
+				<a href="#tabNewCategory" class="mdl-tabs__tab is-active">Nueva Industria</a>
+				<a href="#tabListCategory" class="mdl-tabs__tab">Listar tipos Industrias</a>
 			</div>
 			<div class="mdl-tabs__panel is-active" id="tabNewCategory">
 				<div class="mdl-grid">
 					<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--8-col-desktop mdl-cell--2-offset-desktop">
 						<div class="full-width panel mdl-shadow--2dp">
 							<div class="full-width panel-tittle bg-primary text-center tittles">
-							Agregar Categoria 
+							Agregar Industria 
 							</div>
 							<div class="full-width panel-content">
-							<?php if ($id_category == null){ ?><form action="<?php echo FRONT_ROOT."Category/addCategory";?>" method="POST">
-							<?php }else{ ?> <form action="<?php echo FRONT_ROOT."Category/ModifyCategory";?>" method="post"> 
-								<input type="hidden" name="id_category" class="form-control form-control-ml" value="<?php echo $id_category;?>">
+							<?php if ($id_Industry == null){ ?><form action="<?php echo FRONT_ROOT."Industry/addIndustry";?>" method="POST">
+							<?php }else{ ?> <form action="<?php echo FRONT_ROOT."Industry/ModifyIndustry";?>" method="POST"> 
+								<input type="hidden" name="id_Industry" class="form-control form-control-ml" value="<?php echo $id_Industry;?>">
 							<?php }  ?>
-									<h5 class="text-condensedLight">Nombre de la Categoria</h5>
+									<h5 class="text-condensedLight">Nombre del tipo de Industria</h5>
 									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-										<input class="mdl-textfield__input" type="text" name ="name" <?php if($id_category != null){?> value = "<?php echo $category->getName() ;?>" <?php } ?> pattern="-?[A-Za-z0-9áéíóúÁÉÍÓÚ ]*(\.[0-9]+)?" id="NameCategory" required>
-										<label class="mdl-textfield__label" for="NameCategory">Nombre</label>
+										<input class="mdl-textfield__input" type="text" name ="name" <?php if($id_Industry != null){?> value = "<?php echo $Industry->getName() ;?>" <?php } ?> pattern="-?[A-Za-z0-9áéíóúÁÉÍÓÚ ]*(\.[0-9]+)?" id="NameIndustry" required>
+										<label class="mdl-textfield__label" for="NameIndustry">Nombre</label>
 										<span class="mdl-textfield__error">Nombre Invalido</span>
 									</div>
 									<p class="text-center">
-										<button  type="submit" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addCategory">
+										<button  type="submit" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addIndustry">
 											<i class="zmdi zmdi-plus"></i>
 										</button>
-										<div class="mdl-tooltip" for="btn-addCategory">Agregar Categoria</div>
+										<div class="mdl-tooltip" for="btn-addIndustry">Agregar Tipo de Industria</div>
 									</p>
 								</form>
 							</div>
@@ -56,31 +56,30 @@ require_once(VIEWS_PATH."validate-session.php");
 					<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--8-col-desktop mdl-cell--2-offset-desktop">
 						<div class="full-width panel mdl-shadow--2dp">
 							<div class="full-width panel-tittle bg-success text-center tittles">
-								Lista de las Categorias
+								Lista de los Tipos de Industrias
 							</div>
 							<div class="full-width panel-content">
 								<form action="#tabListCategory">
 									<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-										<label class="mdl-button mdl-js-button mdl-button--icon" for="searchCategory">
+										<label class="mdl-button mdl-js-button mdl-button--icon" for="searchIndustry">
 											<i class="zmdi zmdi-search"></i>
 										</label>
 										<div class="mdl-textfield__expandable-holder">
-											<input class="mdl-textfield__input" type="text" id="searchCategory">
+											<input class="mdl-textfield__input" type="text" id="searchIndustry">
 											<label class="mdl-textfield__label"></label>
 										</div>
 									</div>
 								</form>
 								<div class="mdl-list">
-								<?php if( !empty($listCategory) && isset($listCategory)){ foreach($listCategory as $category){?>
+								<?php if( !empty($listIndustry) && isset($listIndustry)){ foreach($listIndustry as $Industry){?>
 									<div class="mdl-list__item mdl-list__item--two-line">
 										<span class="mdl-list__item-primary-content">
-											<i class="zmdi zmdi-label mdl-list__item-avatar"></i>
-											<span><?php echo $category->getName() ;?></span>	
+											<i class="zmdi zmdi-city-alt mdl-list__item-avatar"></i>
+											<span><?php echo $Industry->getName() ;?></span>	
 										</span>
 										<div>
-									<button><a class="mdl-list__item-secondary-action" href="<?php echo FRONT_ROOT."Category/ShowModify?id_category=".$category->getId_category();?>"><i class="zmdi zmdi-edit" ></i> Editar</a></button>
-										
-									<button><a class="mdl-list__item-secondary-action" href="<?php echo FRONT_ROOT."Category/RemoveCategory?id_category=".$category->getId_category();?>"><i class="zmdi zmdi-delete"> </i> Eliminar</a></button>
+									<button><a class="mdl-list__item-secondary-action" href="<?php echo FRONT_ROOT."Industry/ShowModify?id_Industry=".$Industry->getId_industry();?>"><i class="zmdi zmdi-edit" ></i> Editar</a></button>	
+									<button><a class="mdl-list__item-secondary-action" href="<?php echo FRONT_ROOT."Industry/RemoverIndustry?id_Industry=".$Industry->getId_industry();?>"><i class="zmdi zmdi-delete"> </i> Eliminar</a></button>
 								</div>
 									</div>
 									<li class="full-width divider-menu-h"></li>
@@ -98,4 +97,5 @@ require_once(VIEWS_PATH."validate-session.php");
 <?php 
     include_once('footer.php');
 ?>
+  
   

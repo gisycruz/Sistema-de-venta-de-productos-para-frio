@@ -19,7 +19,7 @@ require_once(VIEWS_PATH."validate-session.php");
 		<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 			<div class="mdl-tabs__tab-bar">
 				<a href="#tabNewCategory" class="mdl-tabs__tab is-active">Nuevo Tipo de Gas</a>
-				<a href="#tabListCategory" class="mdl-tabs__tab">Listar Tipo de Gas</a>
+				<a href="#tabListCategory" class="mdl-tabs__tab">Listar Tipos de Gas</a>
 			</div>
 			<div class="mdl-tabs__panel is-active" id="tabNewCategory">
 				<div class="mdl-grid">
@@ -33,7 +33,7 @@ require_once(VIEWS_PATH."validate-session.php");
 							<?php }else{ ?> <form action="<?php echo FRONT_ROOT."GasType/ModifyGasType";?>" method="POST"> 
 								<input type="hidden" name="id_GasType" class="form-control form-control-ml" value="<?php echo $id_GasType;?>">
 							<?php }  ?>
-									<h5 class="text-condensedLight">Nombre de Tipo de Gas</h5>
+									<h5 class="text-condensedLight">Nombre del Tipo de Gas</h5>
 									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 										<input class="mdl-textfield__input" type="text" name ="name" <?php if($id_GasType != null){?> value = "<?php echo $GasType->getName() ;?>" <?php } ?> pattern="-?[A-Za-z0-9áéíóúÁÉÍÓÚ ]*(\.[0-9]+)?" id="NameGasType" required>
 										<label class="mdl-textfield__label" for="NameGasType">Nombre</label>
@@ -56,7 +56,7 @@ require_once(VIEWS_PATH."validate-session.php");
 					<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--8-col-desktop mdl-cell--2-offset-desktop">
 						<div class="full-width panel mdl-shadow--2dp">
 							<div class="full-width panel-tittle bg-success text-center tittles">
-								Listar Tipos de Gas
+								Lista de los Tipos de Gas
 							</div>
 							<div class="full-width panel-content">
 								<form action="#tabListCategory">
@@ -74,7 +74,7 @@ require_once(VIEWS_PATH."validate-session.php");
 								<?php if( !empty($listGasType) && isset($listGasType)){ foreach($listGasType as $GasType){?>
 									<div class="mdl-list__item mdl-list__item--two-line">
 										<span class="mdl-list__item-primary-content">
-											<i class="zmdi zmdi-label mdl-list__item-avatar"></i>
+											<i class="zmdi zmdi-fire mdl-list__item-avatar"></i>
 											<span><?php echo $GasType->getName() ;?></span>	
 										</span>
 										<div>

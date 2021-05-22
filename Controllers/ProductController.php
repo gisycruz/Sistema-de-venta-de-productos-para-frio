@@ -1,17 +1,16 @@
 <?php
 
 namespace Controllers;
-
+use FFI\Exception;
 use DAO\PowerDAO as PowerDAO;
 use DAO\GasTypeDAO as GasTypeDAO;
 use DAO\AplicationDAO as AplicationDAO;
 use DAO\BrandDAO as  BrandDAO;
 use DAO\CategoryDAO as CategoryDAO;
-use DAO\ProviderDAO as ProviderDAO; 
-use DAO\DescriptionProductDAO as DescriptionProductDAO;
+use DAO\IndustryDAO as IndustryDAO; 
 use DAO\ProductDAO as ProductDAO;
-use Models\DescriptionProduct as DescriptionProduct;
 use Models\Product as Product;
+use Controllers\DescriptionProductController as DescriptionProducController;
 use Controllers\Functions;
 use PDOException;
 
@@ -20,11 +19,11 @@ class ProductController
     private $powerDao;
     private $gasTypeDao;
     private $aplicationDao;
-    private $descriptionPDao;
+    private $descriptionP;
     private $productDao;
     private $categoryDao;
     private $brandDao;
-    private $providerDao ;
+    private $IndustryDao ;
 
 
     public function __construct(){
@@ -32,14 +31,14 @@ class ProductController
         $this->powerDao = PowerDAO::GetInstance();
         $this->gasTypeDao = GasTypeDAO::GetInstance();
         $this->aplicationDao = AplicationDAO::GetInstance();
-        $this->descriptionPDao = DescriptionProductDAO::GetInstance();
+        $this->descriptionPController = new DescriptionProductController();
         $this->categoryDao = CategoryDAO::GetInstance();
         $this->brandDao = BrandDAO::GetInstance();
-        $this->providerDao = ProviderDAO::GetInstance();
+        $this->IndustryDao = IndustryDAO::GetInstance();
         $this->productDao = ProductDAO::GetInstance();
     }
 
-    public function showAddProduct($message = ""){
+    public function showAddProduct($id_Product = null , $message = ""){
 
         require_once(VIEWS_PATH."validate-session.php");
 
@@ -53,87 +52,139 @@ class ProductController
 
         $listBrand = $this->brandDao->getAllBrand();
         
-        $listProvider = $this->providerDao->getAllProvider();
+        $listIndustry = $this->IndustryDao->getAllIndustry();
 
-        require_once(VIEWS_PATH."add-product.php");
+        $listProduct = $this->productDao->getAllProduct();
+
+        $listCategory2 = [];
+
+        foreach ( $listProduct as $product){
+
+            array_push($listCategory2 , $product->getCategory()->getId_category());
+        }
+
+        $listCategory2 = array_unique($listCategory2);
+
+        $listNewCategory = [];
+
+        foreach($listCategory2 as $id_category ){
+
+            array_push($listNewCategory,CategoryDAO::MapearCategory($id_category));
+        }
+
+        if($id_Product != null){
+        $Product = ProductDAO::MapearProduct($id_Product);
+        }
+         require_once(VIEWS_PATH."add-product.php");
+    }
+
+    public function ShowModify($id_Product){
+
+        require_once(VIEWS_PATH."validate-session.php");
+    
+        $this->showAddProduct($id_Product,"Modificar");
+    
+        
     }
  
    
-    public function addProduct($code ,$id_category,$id_brand ,$id_provider ,$id_gasType,$id_aplication,$id_power,$dataSheet ){
+    public function addProduct($code,$id_category,$id_brand ,$id_Industry ,$id_gasType,$id_aplication,$id_power,$photo,$dataSheet){
     
        require_once(VIEWS_PATH."validate-session.php");
 
         $category = CategoryDAO::MapearCategory($id_category);
         $brand = BrandDAO::MapearBrand($id_brand);
-        $provider = ProviderDAO::MapearProvider($id_provider);  
-
-
+        $Industry = IndustryDAO::MapearIndustry($id_Industry);  
+        
         $product = new Product();
         $product->setCode($code);
         $product->setCategory($category);
         $product->setBrand($brand);
-        $product->setProvider($provider);
+        $product->setIndustry($Industry);
+        $product->setPhoto($photo);
         $product->setDataSheet($dataSheet);
 
-
-         // buscar si existe un producto con la misma description null lo agrega, objeto lo devuelve 
-        $descriptionP = $this->descriptionPDao->getDescriptionProductEqually($id_power,$id_gasType,$id_aplication);
-          
-        if($descriptionP == null){
-
-            $power = PowerDAO::MapearPower($id_power);
-            $gasType = GasTypeDAO::MapearGasType($id_gasType);
-            $aplication = AplicationDAO::MapearAplication($id_aplication);
-    
-             
-             $descriptionP = new DescriptionProduct();
-    
-             $descriptionP->setPower($power);
-             $descriptionP->setGasType($gasType);
-             $descriptionP->setAplication($aplication);
-
-             try {
-
-                $resultDescrip =  $this->descriptionPDao->addDescriptionProduct($descriptionP);
-                 
-                if($resultDescrip == 1){
-
-                    $product->setDescriptionP($descriptionP);
-
-                }else{
-
-                    $this->showAddProduct("Error en Agregar el producto ");
-                   }
-
-            } catch (Exception $ex) {
-                throw $ex;
-
-               $this->showAddProduct("Error en Agregar el producto ");
-            }
-
-        }else{
-
-           $product->setDescriptionP($descriptionP);
-
-        }
+        $descriptionP = $this->descriptionPController->addDescriptionProduct($id_gasType,$id_aplication,$id_power);
+        
+        $product->setDescriptionP($descriptionP);
 
         try {
               
             $result = $this->productDao->addProduct($product);
            
-            if($result == 1)
-            $this->showAddProduct("Producto Agregado");
+            if( $result == 1 )
+            $this->showAddProduct($id_Product = null,"Producto Agregado");
             else
-            $this->showAddProduct("ERROR..AL AGREGAR EL PRODUCTO");
+            $this->showAddProduct($id_Product = null,"ERROR..AL AGREGAR EL PRODUCTO 8");
 
-        
             
         }catch (PDOException $ex){
 
             if(Functions::contains_substr($ex->getMessage(),"Duplicate entry"))
-             $this->showAddProduct("ya existe un Producto con ese CODIGO");
+             $this->showAddProduct($id_Product = null,"ya existe un Producto con ese CODIGO");
         }
     }
+
+        public function RemoverProduct($id_Product)
+        {
+            require_once(VIEWS_PATH."validate-session.php");
+
+            try{
+
+            $result = $this->productDao->DeleteProduct($id_Product);
+           
+            if($result == 1){
+
+            $this->showAddProduct($id_Product = null,"Producto eliminado");
+              
+        }else{
+
+            $this->showAddProduct($id_Product = null,"ERROR: System error, reintente");
+            
+           }
+           
+        } catch(PDOException $ex){
+
+            $message = $ex->getMessage();
+
+            if(Functions::contains_substr($message, "Result consisted of more than one row")) {
+
+               
+                $this->showAddProduct($id_Product = null,"Hay datos asociados No se pobra borrar el Producto");
+               
+
+            }
+        }
+
+    }
+
+    public function ModifyProduct($id_Product ,$code,$id_category,$id_brand ,$id_Industry ,$id_gasType,$id_aplication,$id_power,$photo,$dataSheet){
+
+        require_once(VIEWS_PATH."validate-session.php");
+        
+        $descriptionP = $this->descriptionPController->ModifyDescriptionProduct($id_gasType,$id_aplication,$id_power);
+         
+        var_dump($descriptionP);
+        try{
+
+        $result = $this->productDao->ModifyProduct($id_Product,$code,$id_category,$id_brand ,$id_Industry ,$descriptionP->getId_dp(),$photo,$dataSheet);
+       
+        if($result == 1)
+        $this->showAddProduct($id_Product = null,"producto Editado");
+        //else
+       // $this->showAddProduct($id_Product = null,"ERROR..Al MODIFICAR EL PRODUCTO");
+
+    } catch (PDOException $ex){
+
+        if(Functions::contains_substr($ex->getMessage(),"Duplicate entry"))
+
+         $this->showAddProduct($id_Product = null,"ya existe un Producto con ese Codigo");
+    }
+
+    }
+
+   
+    
     
 }
 

@@ -35,7 +35,6 @@ constraint pk_idprovider primary key (id_provider)
 )engine=InnoDB;
 
 
-
 create table if not exists brand(
 id_brand TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
 name varchar(50) not null unique,
@@ -68,6 +67,14 @@ constraint pk_idpower primary key (id_power)
 insert into power(description) value ('1/2 HP'),('1/3 HP'),('3/4 HP'),('1 HP'),('1 1/2 HP'),('1 1/3 HP'),('1 3/4 HP'),
 ('2 HP'),('2 1/2 HP'), (' 2 1/3 HP'),('2 3/4 HP'),('3 HP'),('4 HP'),('5 HP'),('6 HP') ;
 
+create table if not exists industry(
+id_industry TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
+name varchar(20) not null unique ,
+constraint pk_idindustry primary key (id_industry)
+)engine = InnoDB;
+
+insert into power(description) value ('1/2 HP'),('1/3 HP'),('3/4 HP'),('1 HP'),('1 1/2 HP'),('1 1/3 HP'),('1 3/4 HP'),
+('2 HP'),('2 1/2 HP'), (' 2 1/3 HP'),('2 3/4 HP'),('3 HP'),('4 HP'),('5 HP'),('6 HP') ;
 create table if not exists descriptionProduct(
 id_dp TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
 idgasType TINYINT UNSIGNED NOT NULL ,
@@ -84,27 +91,31 @@ id_product TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
 code varchar(50) not null unique,
 idcategory TINYINT UNSIGNED NOT NULL,
 idbrand TINYINT UNSIGNED NOT NULL,
+idindustry TINYINT UNSIGNED NOT NULL,
 iddescriptionP TINYINT UNSIGNED NOT NULL,
-idprovider TINYINT UNSIGNED NOT NULL,
+photo varchar(50) not null,
 dataSheet varchar(50) not null,
 constraint pk_idproduct primary key (id_product),
 constraint fk_idcategory foreign key (idcategory) references category(id_category) on update CASCADE ,
 constraint fk_idbrand foreign key (idbrand) references brand(id_brand) on update CASCADE,
+constraint fk_idindustry foreign key (idindustry) references industry(id_industry) on update CASCADE,
 constraint fk_iddescriptionP foreign key (iddescriptionP) references descriptionProduct(id_dp) on update CASCADE,
-constraint fk_idprovider foreign key (idprovider) references provider(id_provider) on update CASCADE
+
 )engine = InnoDB;
 
 create table if not exists Buy(
 id_buy TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
 idproduct TINYINT UNSIGNED NOT NULL,
 quantity SMALLINT UNSIGNED NOT NULL,
+idprovider TINYINT UNSIGNED NOT NULL,
 price_dollar DECIMAL(10, 2) DEFAULT 0 not null,
 price_buy DECIMAL(10, 2) DEFAULT 0 not null,
 price_pesos DECIMAL(10, 2) DEFAULT 0 not null,
 price_Iva DECIMAL(10, 2) DEFAULT 0 not null,
 price_sale DECIMAL(10, 2) DEFAULT 0 not null,
 constraint pk_idbuy primary key (id_buy),
-constraint fk_idproduct foreign key (idproduct) references product(id_product) on update CASCADE
+constraint fk_idproduct foreign key (idproduct) references product(id_product) on update CASCADE,
+constraint fk_idprovider foreign key (idprovider) references provider(id_provider) on update CASCADE
 )engine = InnoDB;
 
 
@@ -134,7 +145,18 @@ end if;
 END $$
 DELIMITER ;
 
-
+DELIMITER $$
+create procedure deleteindustry(idindustrys int)
+BEGIN
+declare idproduct int default 0;
+select id_product into idproduct from product where idindustry = idindustrys;
+if(idproduct <> 0) then
+SIGNAL sqlstate '11111' SET MESSAGE_TEXT = 'Result consisted of more than one row', MYSQL_ERRNO = 9999;
+else 
+delete from industry where id_industry = idindustrys;
+end if;
+END $$
+DELIMITER ;
 
 DELIMITER $$
 create procedure deleteGasType(idgasTypes int)
@@ -178,9 +200,9 @@ DELIMITER ;
 DELIMITER $$
 create procedure deleteprovider(idproviders int)
 BEGIN
-declare idproduct int default 0;
-select id_product into idproduct from Product where idprovider = idproviders;
-if(idproduct <> 0) then
+declare idbuy int default 0;
+select id_buy into idbuy from buy where idprovider = idproviders;
+if(idbuy <> 0) then
 SIGNAL sqlstate '11111' SET MESSAGE_TEXT = 'Result consisted of more than one row', MYSQL_ERRNO = 9999;
 else 
 delete from provider where id_provider = idproviders;
@@ -193,7 +215,7 @@ create procedure deleteProduct(idProducts int)
 BEGIN
 declare idbuy int default 0;
 select id_buy into idbuy from buy where idProduct = idProducts;
-if(idproduct <> 0) then
+if(idbuy <> 0) then
 SIGNAL sqlstate '11111' SET MESSAGE_TEXT = 'Result consisted of more than one row', MYSQL_ERRNO = 9999;
 else 
 delete from Product where id_Product = idProducts;

@@ -3,7 +3,9 @@
 namespace DAO;
 
 use DAO\Connection as Connection;
+use DAO\Iaplication as Iaplication;
 use Models\Aplication as Aplication;
+use FFI\Exception;
 
 class AplicationDAO implements Iaplication{
 

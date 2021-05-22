@@ -1,9 +1,10 @@
 <?php 
  namespace DAO;
 
- use Models\Provider as Provider;
+use Models\Provider as Provider;
 use DAO\Connection as Connection;
 use DAO\IProvider as IProvider;
+use FFI\Exception;
 
  class ProviderDAO implements IProvider{
     

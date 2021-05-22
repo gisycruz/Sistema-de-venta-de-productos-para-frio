@@ -4,6 +4,8 @@ namespace DAO;
 
 use DAO\Connection as Connection;
 use Models\Power as Power;
+use DAO\Ipower as Ipower;
+use FFI\Exception;
 
 class PowerDAO implements Ipower{
 

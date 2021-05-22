@@ -2,13 +2,14 @@
 
 namespace DAO;
 
+use FFI\Exception;
 use Models\Product as Product;
 use DAO\Connection as Connection;
 use DAO\Iproduct as Iproduct;
 use DAO\CategoryDAO as CategoryDAO;
 use DAO\DescriptionProductDAO as DescriptionProductDAO;
 use DAO\BrandDAO as BrandDAO;
-use DAO\ProviderDAO as ProviderDAO;
+use DAO\IndustryDAO as IndustryDAO;
 
 class ProductDAO implements Iproduct{
 
@@ -44,7 +45,8 @@ class ProductDAO implements Iproduct{
             $product->setCategory(CategoryDAO::MapearCategory($p['idcategory']));
             $product->setBrand(BrandDAO::MapearBrand($p['idbrand']));
             $product->setDescriptionP(DescriptionProductDAO::MapearDescriptionProduct($p['iddescriptionP']));
-            $product->setProvider(ProviderDAO::MapearProvider($p['idproveder']));
+            $product->setIndustry(IndustryDAO::MapearIndustry($p['idindustry']));
+            $product->setPhoto($p['photo']);
             $product->setDataSheet($p['dataSheet']);
            
 
@@ -64,25 +66,26 @@ class ProductDAO implements Iproduct{
 
      public function addProduct(Product $product){
 
-        $query = " INSERT INTO " . $this->nameTable . " (code , idcategory , idbrand ,iddescriptionP ,idprovider ,dataSheet ) value (:code , :idcategory , :idbrand , :iddescriptionP , :idprovider , :dataSheet )";
+        $query = " INSERT INTO " . $this->nameTable . " (code , idcategory , idbrand ,iddescriptionP ,idindustry ,photo ,dataSheet ) value (:code , :idcategory , :idbrand , :iddescriptionP , :idIndustry , :photo , :dataSheet )";
 
         $parameters['code'] = $product->getCode();
         $parameters['idcategory'] = $product->getCategory()->getId_category();
         $parameters['idbrand'] = $product->getBrand()->getId_brand();
         $parameters['iddescriptionP'] = $product->getDescriptionP()->getId_dp();
-        $parameters['idprovider'] = $product->getProvider()->getId_provider();
+        $parameters['idIndustry'] = $product->getIndustry()-> getId_industry();
+        $parameters['photo'] = $product->getPhoto();
         $parameters['dataSheet'] = $product->getDataSheet();
        
         try {
-
-          $result =  $this->connection->ExecuteNonQuery($query , $parameters);
-
-        } catch (Exception $ex) {
-            throw $ex;
+           
+            $result = $this->connection->ExecuteNonQuery($query , $parameters);
+             
+        } catch (Exception $Ex) {
+            throw $Ex;
+            
         }
 
-      return $result;
-
+       return $result;
      }
     private function getAllProductBD(){
 
@@ -90,13 +93,11 @@ class ProductDAO implements Iproduct{
 
         try {
 
-           $result =  $this->connection->Execute($query);
+            return $this->connection->Execute($query);
 
         } catch (Exception $ex) {
             throw $ex;
         }
-
-        return $result;
 
     }
 
@@ -105,21 +106,21 @@ class ProductDAO implements Iproduct{
          $this->listProduct = [];
 
          $arrayProduct = $this->getAllProductBD();
-
+           
          if(!empty($arrayProduct)){
 
             $result = $this->Mapear($arrayProduct);
-
+           
             if(is_array($result)){
-
-                $this->listProduct = $result;
+        
+                $this->listProduct = $result; 
 
             }else{
 
             $arrayResult[0] = $result;
-            $this->listPower = $arrayResult;
+            $this->listProduct = $arrayResult;
         }
-
+       
         return $this->listProduct ;
 
          }
@@ -127,14 +128,14 @@ class ProductDAO implements Iproduct{
     }
     public function deleteProduct($id_product){
 
-        $query = "  ";
+        $query = " CALL deleteProduct(?)";
 
         $parameters['id_product'] = $id_product;
 
 
         try {
 
-           $result =  $this->connection->ExecuteNonQuery($query,$parameters);
+           $result =  $this->connection->ExecuteNonQuery($query,$parameters,QueryType::StoredProcedure);
 
         } catch (Exception $ex) {
             throw $ex;
@@ -143,18 +144,19 @@ class ProductDAO implements Iproduct{
         return $result;
     }
 
+   
+    public function ModifyProduct($id_Product ,$code,$id_category,$id_brand ,$id_Industry ,$id_descriptionP,$photo,$dataSheet) {
 
-    public function ModifyProduct($id_product ,$code , $id_category , $id_brand ,$id_descriptionP ,$id_provider ,$dataSheet) {
-
-        $query = " UPDATE " . $this->nameTable . " SET  code = (:code) , idcategory = (:idcategory) , idbrand = (:idbrand) , iddescription = (:iddescription) , idprovider = (:idprovider) , dataSheet = (:dataSheet)   WHERE  id_Product = (:id_Product) ";
-      
+        $query = " UPDATE " . $this->nameTable . " SET  code = (:code) , idcategory = (:idcategory) , idbrand = (:idbrand) , iddescriptionP = (:iddescriptionP) , idindustry = (:idindustry) , photo = (:photo) , dataSheet = (:dataSheet)   WHERE  id_product = (:id_product) ";
+       
         $parameters['code'] = $code;
         $parameters["idcategory"] = $id_category;
         $parameters['idbrand'] = $id_brand;
-        $parameters['iddescription'] = $id_description;
-        $parameters['idprovider'] = $id_provider;
+        $parameters['iddescriptionP'] = $id_descriptionP;
+        $parameters['idindustry'] = $id_Industry;
+        $parameters['photo'] = $photo;
         $parameters['dataSheet'] = $dataSheet;
-        $parameters["id_Product"] =$id_Product;
+        $parameters["id_product"] =$id_Product;
 
         try {
           
@@ -163,6 +165,7 @@ class ProductDAO implements Iproduct{
         } catch (Exception $ex) {
             throw $ex;
         }
+
         return $result;
 
     }

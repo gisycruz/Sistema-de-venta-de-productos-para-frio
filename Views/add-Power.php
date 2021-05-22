@@ -18,8 +18,8 @@ require_once(VIEWS_PATH."validate-session.php");
 		</section>
 		<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 			<div class="mdl-tabs__tab-bar">
-				<a href="#tabNewCategory" class="mdl-tabs__tab is-active">Nueva Tipo de Potencia</a>
-				<a href="#tabListCategory" class="mdl-tabs__tab">Listar Tipo de Potencia</a>
+				<a href="#tabNewCategory" class="mdl-tabs__tab is-active">Nuevo Tipo de Potencia</a>
+				<a href="#tabListCategory" class="mdl-tabs__tab">Listar Tipos de Potencias</a>
 			</div>
 			<div class="mdl-tabs__panel is-active" id="tabNewCategory">
 				<div class="mdl-grid">
@@ -33,7 +33,7 @@ require_once(VIEWS_PATH."validate-session.php");
 							<?php }else{ ?> <form action="<?php echo FRONT_ROOT."Power/ModifyPower";?>" method="POST"> 
 								<input type="hidden" name="id_Power" class="form-control form-control-ml" value="<?php echo $id_Power;?>">
 							<?php }  ?>
-									<h5 class="text-condensedLight">Nombre de Tipo de Potencia</h5>
+									<h5 class="text-condensedLight">Nombre del Tipo de Potencia</h5>
 									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 										<input class="mdl-textfield__input" type="text" name ="name" <?php if($id_Power != null){?> value = "<?php echo $Power->getDescription() ;?>" <?php } ?> pattern="-?[A-Za-z0-9áéíóúÁÉÍÓÚ ]*(\.[0-9]+)?" id="NamePower" required>
 										<label class="mdl-textfield__label" for="NamePower">Nombre</label>
@@ -56,7 +56,7 @@ require_once(VIEWS_PATH."validate-session.php");
 					<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--8-col-desktop mdl-cell--2-offset-desktop">
 						<div class="full-width panel mdl-shadow--2dp">
 							<div class="full-width panel-tittle bg-success text-center tittles">
-								Listar tipo de Potencias
+								Lista de los Tipos de Potencias
 							</div>
 							<div class="full-width panel-content">
 								<form action="#tabListCategory">
@@ -74,7 +74,7 @@ require_once(VIEWS_PATH."validate-session.php");
 								<?php if( !empty($listPower) && isset($listPower)){ foreach($listPower as $Power){?>
 									<div class="mdl-list__item mdl-list__item--two-line">
 										<span class="mdl-list__item-primary-content">
-											<i class="zmdi zmdi-label mdl-list__item-avatar"></i>
+											<i class="zmdi zmdi-battery mdl-list__item-avatar"></i>
 											<span><?php echo $Power->getDescription() ;?></span>	
 										</span>
 										<div>

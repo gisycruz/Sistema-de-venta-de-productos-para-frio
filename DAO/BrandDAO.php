@@ -4,9 +4,8 @@ namespace DAO;
 
 use Models\Brand as Brand;
 use DAO\Ibrand as Ibrand;
-use DAO\CategoryDAO as CategoryDAO;
 use DAO\Connection as Connection;
-
+use FFI\Exception;
 
 class BrandDAO implements Ibrand{
 

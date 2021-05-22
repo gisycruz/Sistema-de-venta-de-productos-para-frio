@@ -56,7 +56,7 @@ require_once(VIEWS_PATH."validate-session.php");
 					<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--8-col-desktop mdl-cell--2-offset-desktop">
 						<div class="full-width panel mdl-shadow--2dp">
 							<div class="full-width panel-tittle bg-success text-center tittles">
-								Lista de Marcas
+								Lista de las Marcas
 							</div>
 							<div class="full-width panel-content">
 								<form action="#tabListCategory">
@@ -74,7 +74,7 @@ require_once(VIEWS_PATH."validate-session.php");
 								<?php if( !empty($listBrand) && isset($listBrand)){ foreach($listBrand as $brand){?>
 									<div class="mdl-list__item mdl-list__item--two-line">
 										<span class="mdl-list__item-primary-content">
-											<i class="zmdi zmdi-label mdl-list__item-avatar"></i>
+											<i class="zmdi zmdi-tag-more mdl-list__item-avatar"></i>
 											<span><?php echo $brand->getName() ;?></span>	
 										</span>
 										<div>

@@ -4,6 +4,8 @@ namespace DAO;
 
 use Models\GasType as Gastype;
 use DAO\Connection as Connection;
+use DAO\IgasType as IgasType;
+use FFI\Exception;
 
 class GasTypeDAO implements IgasType{
 

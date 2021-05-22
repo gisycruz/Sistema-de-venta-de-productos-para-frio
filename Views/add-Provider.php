@@ -27,8 +27,8 @@ require_once(VIEWS_PATH."validate-session.php");
 								Nuevo Proveedor
 							</div>
 							<div class="full-width panel-content">
-                            <?php if ($id_Provider == null){ ?><form action="<?php echo FRONT_ROOT."Provider/addProvider";?>" method="get">
-							<?php }else{ ?> <form action="<?php echo FRONT_ROOT."Provider/ModifyProvider";?>" method="get"> 
+                            <?php if ($id_Provider == null){ ?><form action="<?php echo FRONT_ROOT."Provider/addProvider";?>" method="post">
+							<?php }else{ ?> <form action="<?php echo FRONT_ROOT."Provider/ModifyProvider";?>" method="post"> 
 								<input type="hidden" name="id_Provider" class="form-control form-control-ml" value="<?php echo $id_Provider;?>">
 							<?php }  ?>
 									<h5 class="text-condensedLight">Datos del Proveedor</h5>
@@ -97,7 +97,7 @@ require_once(VIEWS_PATH."validate-session.php");
 					<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--8-col-desktop mdl-cell--2-offset-desktop">
 						<div class="full-width panel mdl-shadow--2dp">
 							<div class="full-width panel-tittle bg-success text-center tittles">
-								List Providers
+								Lista de los Proveedores
 							</div>
 							<div class="full-width panel-content">
 								<form action="#">

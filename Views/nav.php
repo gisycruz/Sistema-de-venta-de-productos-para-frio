@@ -75,7 +75,7 @@
 					<li class="btn-Notification" id="notifications">
 						<i class="zmdi zmdi-notifications"></i>
 						<!-- <i class="zmdi zmdi-notifications-active btn-Notification" id="notifications"></i> -->
-						<div class="mdl-tooltip" for="notifications">Notifications</div>
+						<div class="mdl-tooltip" for="notifications">Notificaciones</div>
 					</li>
 					<li class="btn-exit" id="btn-exit">
 						<i class="zmdi zmdi-power"></i>
@@ -153,6 +153,16 @@
 									</div>
 									<div class="navLateral-body-cr hide-on-tablet">
 										MARCAS
+									</div>
+								</a>
+							</li>
+							<li class="full-width">
+								<a href="<?php echo FRONT_ROOT."Industry/showAddIndustry";?>" class="full-width">
+									<div class="navLateral-body-cl">
+										<i class="zmdi zmdi-city-alt"></i>
+									</div>
+									<div class="navLateral-body-cr hide-on-tablet">
+										INDUSTRIA
 									</div>
 								</a>
 							</li>

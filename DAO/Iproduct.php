@@ -9,6 +9,7 @@ interface Iproduct{
      function addProduct(Product $product);
      function getAllProduct();
      function deleteProduct($id_product);
+     //falta
 }
 
 ?>

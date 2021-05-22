@@ -4,6 +4,7 @@ namespace DAO;
 use Models\User as User;
 use DAO\Connection as Connection;
 use DAO\Iuser as Iuser;
+use FFI\Exception;
 
 class UserDAO implements Iuser{
 

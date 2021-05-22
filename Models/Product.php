@@ -10,13 +10,14 @@ class Product
     private $category;
     private $brand;
     private $descriptionP;
-    private $provider;
+    private $industry;
+    private $photo;
     private $dataSheet;
     
     /**
      * Get the value of id_product
      */
-    public function getIdProduct()
+    public function getId_Product()
     {
         return $this->id_product;
     }
@@ -26,7 +27,7 @@ class Product
      *
      * @return  self
      */
-    public function setIdProduct($id_product)
+    public function setId_Product($id_product)
     {
         $this->id_product = $id_product;
 
@@ -114,21 +115,21 @@ class Product
     }
 
     /**
-     * Get the value of provider
+     * Get the value of industry
      */
-    public function getProvider()
+    public function getIndustry()
     {
-        return $this->provider;
+        return $this->industry;
     }
 
     /**
-     * Set the value of provider
+     * Set the value of industry
      *
      * @return  self
      */
-    public function setProvider($provider)
+    public function setIndustry($industry)
     {
-        $this->provider = $provider;
+        $this->industry = $industry;
 
         return $this;
     }
@@ -153,4 +154,24 @@ class Product
         return $this;
     }
 
+
+    /**
+     * Get the value of photo
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * Set the value of photo
+     *
+     * @return  self
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
 }

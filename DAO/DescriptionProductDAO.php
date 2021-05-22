@@ -8,6 +8,7 @@ use DAO\GasTypeDAO as GasTypeDAO;
 use DAO\AplicationDAO as AplicationDAO;
 use DAO\PowerDAO as PowerDAO;
 use DAO\IdescriptionProduct as IdescriptionProduct;
+use FFI\Exception;
 
 class DescriptionProductDAO implements IdescriptionProduct{
 

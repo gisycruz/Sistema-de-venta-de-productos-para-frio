@@ -19,7 +19,7 @@ require_once(VIEWS_PATH."validate-session.php");
 		<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 			<div class="mdl-tabs__tab-bar">
 				<a href="#tabNewCategory" class="mdl-tabs__tab is-active">Nuevo Tipo de Aplicacion</a>
-				<a href="#tabListCategory" class="mdl-tabs__tab">Listar Tipo de Aplicacion</a>
+				<a href="#tabListCategory" class="mdl-tabs__tab">Listar Tipos de Aplicaciones</a>
 			</div>
 			<div class="mdl-tabs__panel is-active" id="tabNewCategory">
 				<div class="mdl-grid">
@@ -33,7 +33,7 @@ require_once(VIEWS_PATH."validate-session.php");
 							<?php }else{ ?> <form action="<?php echo FRONT_ROOT."Aplication/ModifyAplication";?>" method="POST"> 
 								<input type="hidden" name="id_Aplication" class="form-control form-control-ml" value="<?php echo $id_Aplication;?>">
 							<?php }  ?>
-									<h5 class="text-condensedLight">Nombre de Tipo de Aplicacion</h5>
+									<h5 class="text-condensedLight">Nombre del Tipo de Aplicacion</h5>
 									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 										<input class="mdl-textfield__input" type="text" name ="name" <?php if($id_Aplication != null){?> value = "<?php echo $Aplication->getName() ;?>" <?php } ?> pattern="-?[A-Za-z0-9áéíóúÁÉÍÓÚ ]*(\.[0-9]+)?" id="NameAplication" required>
 										<label class="mdl-textfield__label" for="NameAplication">Nombre</label>
@@ -56,7 +56,7 @@ require_once(VIEWS_PATH."validate-session.php");
 					<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--8-col-desktop mdl-cell--2-offset-desktop">
 						<div class="full-width panel mdl-shadow--2dp">
 							<div class="full-width panel-tittle bg-success text-center tittles">
-								Listar Tipo de Aplicacion
+								Lista de los Tipos de Aplicaciones
 							</div>
 							<div class="full-width panel-content">
 								<form action="#tabListCategory">
@@ -74,7 +74,7 @@ require_once(VIEWS_PATH."validate-session.php");
 								<?php if( !empty($listAplication) && isset($listAplication)){ foreach($listAplication as $Aplication){?>
 									<div class="mdl-list__item mdl-list__item--two-line">
 										<span class="mdl-list__item-primary-content">
-											<i class="zmdi zmdi-label mdl-list__item-avatar"></i>
+											<i class="zmdi zmdi-toys mdl-list__item-avatar"></i>
 											<span><?php echo $Aplication->getName() ;?></span>	
 										</span>
 										<div>
